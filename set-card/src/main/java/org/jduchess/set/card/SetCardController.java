@@ -38,7 +38,15 @@ public class SetCardController {
     }
 
 	private Integer createNewGameId() {
-		Integer lastKey = games.keySet().stream().max((entry1, entry2) -> entry1 > entry2 ? 1 : -1).get();
+        Integer lastKey;
+        if(CollectionUtils.isEmpty(games)) {
+            lastKey = 0;
+        } else {
+            lastKey = games.keySet()
+                    .stream()
+                    .max((p1, p2) -> Integer.compare(p1, p2))
+                    .get();
+        }
 		return Integer.valueOf(lastKey.intValue()+1);
 	}
 
