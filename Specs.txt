@@ -1,8 +1,8 @@
 Start spel
-- Id aan spel toekennen
+V - Id aan spel toekennen
 - Bord tonen (3x3)
---- Kaart trekken
---- Bijhouden welke kaarten al getrokken zijn
+V --- Kaart trekken
+V --- Bijhouden welke kaarten al getrokken zijn
 --- Bord tonen
 Set selecteren
 Set controleren

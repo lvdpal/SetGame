@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -25,13 +26,13 @@ public class SetCardController {
 	}
 
     @RequestMapping(method = RequestMethod.GET, value="/draw", produces = "application/json; charset=UTF-8")
-    public List<Card> drawThreeCards(Integer gameId) {
+    public List<Card> drawThreeCards(@RequestParam("game") Integer gameId) {
         List<Card> drawnCards = new ArrayList<>(3);
         List<Card> gameCards = games.get(gameId);
         if(!CollectionUtils.isEmpty(gameCards)) {
             for (int i = 0; i < 3; i++) {
                 drawnCards.add(gameCards.get(0));
-                drawnCards.remove(0);
+                gameCards.remove(0);
             }
         }
         return drawnCards;
