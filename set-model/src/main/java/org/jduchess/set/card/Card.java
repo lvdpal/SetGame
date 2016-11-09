@@ -4,13 +4,18 @@ import java.io.Serializable;
 
 public class Card implements Serializable {
 
-    private CardAmount amount;
-    private CardColor color;
-    private CardFilling filling;
-    private CardShape shape;
-    private int id;
+	private CardAmount amount;
+	private CardColor color;
+	private CardFilling filling;
+	private CardShape shape;
+	private int id;
 
-    public Card(int id, CardAmount amount, CardFilling filling, CardColor color, CardShape shape) {
+    public Card() {
+    	// empty constructor for json
+    }
+    
+    public Card(int id, CardAmount amount, CardFilling filling, 
+    		CardColor color, CardShape shape) {
         this.id = id;
         this.amount = amount;
         this.filling = filling;

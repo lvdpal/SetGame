@@ -4,12 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jduchess.set</groupId>
-	<artifactId>set-model</artifactId>
+	<artifactId>check-set</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>set-model</name>
-	<description>Model for the game set</description>
+	<name>check-set</name>
+	<description>Service to check the set of cards</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.1.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,19 +26,29 @@
 
 	<dependencies>
 		<dependency>
-		    <groupId>org.codehaus.jackson</groupId>
-		    <artifactId>jackson-core-asl</artifactId>
-		    <version>1.9.13</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
-		    <groupId>org.codehaus.jackson</groupId>
-		    <artifactId>jackson-mapper-asl</artifactId>
-		    <version>1.9.13</version>
+			<groupId>org.jduchess.set</groupId>
+			<artifactId>set-model</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-eclipse-plugin</artifactId>
@@ -39,7 +56,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 
 </project>
