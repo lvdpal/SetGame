@@ -5,8 +5,8 @@ V --- Kaart trekken
 V --- Bijhouden welke kaarten al getrokken zijn
 --- Bord tonen
 Set selecteren
-Set controleren
-Set scoren
+V Set controleren
+V Set scoren
 Kaarten aanvullen
 Bord vergroten (+3 kaarten)
 Einde spel
