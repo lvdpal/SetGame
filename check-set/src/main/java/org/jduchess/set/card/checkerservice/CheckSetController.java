@@ -4,6 +4,7 @@ package org.jduchess.set.card.checkerservice;
 import java.util.List;
 
 import org.jduchess.set.card.Card;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CheckSetController {
 	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, value="/check", consumes="application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
 	public boolean isValidSet(@RequestBody List<Card> cards) {
 		Card card1 = cards.get(0);
