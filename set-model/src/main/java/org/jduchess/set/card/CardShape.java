@@ -1,5 +1,5 @@
 package org.jduchess.set.card;
 
 public enum CardShape {
-    HEART, PEACE, CLOVER;
+    HEART, SQUARE, ELLIPSE;
 }
