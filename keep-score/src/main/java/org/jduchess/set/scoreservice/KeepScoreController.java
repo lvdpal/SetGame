@@ -24,7 +24,8 @@ public class KeepScoreController {
 		score++;
 		gameScores.put(gameId, score);
 	}
-	
+
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value="/get", produces = "application/json; charset=UTF-8")
 	public Integer getScore(@RequestParam("game") Integer gameId) {
 		if (gameScores.containsKey(gameId)) {

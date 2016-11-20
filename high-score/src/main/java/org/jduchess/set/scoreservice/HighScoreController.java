@@ -4,17 +4,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/highscore")
 public class HighScoreController {
 	private static final String COOKIE_NAME = "HighScoreForSet";
 	
-	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.PUT, value="/set")
 	public void setHighScore(HttpServletRequest request, 
 			HttpServletResponse response, @RequestParam("highScore") Integer highScore) {
@@ -27,7 +24,7 @@ public class HighScoreController {
 		response.addCookie(cookie);
 	}
 
-	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, value="/isHigh", produces = "application/json; charset=UTF-8")
 	public Boolean isHighScore(HttpServletRequest request, @RequestParam("highScore") Integer highScore) {
 		Cookie cookie = getHighScoreCookie(request);
