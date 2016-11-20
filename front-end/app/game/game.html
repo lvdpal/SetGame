@@ -2,7 +2,7 @@
 	<H1>A Game of set</H1>
 	<table border='1'>		
 		<tr ng-repeat="row in deckOfCards">
-		  <td ng-repeat="card in row" ng-click="selectedCards.push(card)">
+		  <td ng-repeat="card in row" ng-click="selectCard(card)" id="card{{card.id}}">
 			a:{{card.amount}}<br>
 			c:{{card.color}}<br>
 			f:{{card.filling}}<br>

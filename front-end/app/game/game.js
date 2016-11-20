@@ -23,6 +23,18 @@ angular.module('myApp.game', ['ngRoute'])
 		console.log('start game');
 		createGame();		
 	}
+
+	$scope.selectCard = function (card) {
+	    var cell = angular.element(document.querySelector('#card'+card.id));
+	    if(cell.hasClass("selected")) {
+	        cell.removeClass("selected");
+	        // remove the card from the array
+	        $scope.selectedCards.splice($scope.selectedCards.indexOf(card),1);
+	    } else {
+	        cell.addClass("selected");
+	        $scope.selectedCards.push(card);
+	    }
+	}
 	
 	$scope.checkSet = function() {
 		console.log('check set', $scope.selectedCards);

@@ -12,16 +12,14 @@ import org.jduchess.set.card.CardColor;
 import org.jduchess.set.card.CardFilling;
 import org.jduchess.set.card.CardShape;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cards")
 public class SetCardController {
 	Map<Integer, List<Card>> games = new HashMap<>();
 
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value="/createGame", produces = "application/json; charset=UTF-8")
     public Integer createGame() {
 		Integer gameId = createNewGameId();
@@ -33,6 +31,7 @@ public class SetCardController {
 		return gameId;
 	}
 
+	@CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value="/draw", produces = "application/json; charset=UTF-8")
     public List<Card> drawThreeCards(@RequestParam("game") Integer gameId) {
         List<Card> drawnCards = new ArrayList<>(3);
