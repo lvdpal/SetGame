@@ -72,10 +72,9 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
             $scope.gameId = response.data;
             console.log('created game: ' + $scope.gameId);
     		$scope.deckOfCards = [];
-    		drawThreeCards();
-    		drawThreeCards();
-    		drawThreeCards();
-    		drawThreeCards();
+    		for (var i=0;i<4;i++) {
+    			drawThreeCards();
+    		}
         }, function (response) {
             console.log('Error: ', response);
         });
@@ -124,15 +123,25 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
     	var urlIsValidSet = 'http://localhost:8090/check';
     	$http.post(urlIsValidSet, $scope.selectedCards).
 	        then(function(response) {
+	        	var cardsToBeRemoved = $scope.selectedCards;
+	        	$scope.selectedCards = [];
 	        	$scope.validSet = response.data;
 	        	if ($scope.validSet === true) {
 	        		incrementScore();
-	        		$scope.deckOfCards.splice($scope.deckOfCards.indexOf($scope.selectedCards[0]), 1);
-	        		$scope.deckOfCards.splice($scope.deckOfCards.indexOf($scope.selectedCards[1]), 1);
-	        		$scope.deckOfCards.splice($scope.deckOfCards.indexOf($scope.selectedCards[2]), 1);
+	        		// remove used cards from deck
+	        		angular.forEach(cardsToBeRemoved, function (value, index) {
+	                    angular.forEach($scope.deckOfCards, function(row) {
+	                    	console.log('row: ' + row);
+	                    	var index = row.indexOf(value);
+	                    	if (index > -1) {
+	                    		console.log('index: ' + index);
+	                    		row.splice(index,1);
+	                    	}	                    	
+	                    });
+	                });
+	                cardsToBeRemoved = [];
 	        		drawThreeCards();
 	        	}
-	        	$scope.selectedCards = [];
 	        }, function (response) {
 	            console.log('Error: ', response);
 	        });
