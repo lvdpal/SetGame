@@ -25,12 +25,14 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
 	}
 
     $scope.drawCard = function(card) {
-        if(card.shape == 'HEART') {
-            return showHeart(card.color);
-        } else if (card.shape == 'SQUARE') {
-            return showSquare(card.color);
-        } else if (card.shape == 'ELLIPSE') {
-            return showEllipse(card.color);
+        if (angular.isDefined(card) && angular.isDefined(card.shape)) {
+	    	if(card.shape == 'HEART') {
+	            return showHeart(card.color);
+	        } else if (card.shape == 'SQUARE') {
+	            return showSquare(card.color);
+	        } else if (card.shape == 'ELLIPSE') {
+	            return showEllipse(card.color);
+	        }
         }
     }
 
@@ -63,6 +65,7 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
 	
 	$scope.stopGame = function() {
 		console.log('stop Game');
+		isHighScore();
 	}
 	
     function createGame() {
@@ -83,8 +86,39 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
     function drawThreeCards() {
     	console.log('draw cards');
     	$http.get('http://localhost:8080/cards/draw?game=' + $scope.gameId).then(function(response) {
-        	console.log('we found some cards: ', response)
-        	$scope.deckOfCards.push(response.data);
+        	console.log('we found some cards: ', response)        	
+        	var newCards = response.data;
+        	if (angular.isDefined(newCards) && newCards.length > 0) {
+	        	// maybe we need to fill some empty spots in the rows after we deleted some cards
+	        	var counter = 0;
+	        	angular.forEach($scope.deckOfCards, function(row) {
+	        		while (row.length < 3) {
+	        			row.push(newCards[counter]);
+	        			counter = counter + 1;
+	        		}
+	        	});
+	        	// no empty spots found so add all the cards to the deck
+	        	if (counter === 0) {
+	        		$scope.deckOfCards.push(newCards);
+	        	}
+        	} else {
+        		// No cards found realine cards
+        		var allCardsLeft = [];
+        		angular.forEach($scope.deckOfCards, function(row) {
+        			angular.forEach(row, function(card) {
+        				allCardsLeft.push(card);
+        			});
+        		});
+        		$scope.deckOfCards = [];
+        		var row = [];
+        		angular.forEach(allCardsLeft, function(card) {
+        			row.push(card);
+        			if (row.length === 3) {
+        				$scope.deckOfCards.push(row);
+        				row = [];
+        			}
+        		});
+        	}
         }, function (response) {
             console.log('Error: ', response);
         });
@@ -100,9 +134,9 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
     }
     
     function incrementScore() {
-    	var urlIncreamentScore = 'http://localhost:8081/score/increment?game=';
-    	$http.put(urlIncreamentScore + $scope.gameId).then(function(response) {
-            $scope.score = response.data;
+    	var urlIncreamentScore = 'http://localhost:8081/score/increment?game=' + $scope.gameId;
+    	$http.put(urlIncreamentScore).then(function(response) {
+            getScore();
         }, function (response) {
             console.log('Error: ', response);
         });
@@ -111,7 +145,13 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
     function isHighScore() {
     	var urlIsHighScore = 'http://localhost:8082/highscore/isHigh?highScore=' + $scope.score;
     	$http.get(urlIsHighScore).then(function(response) {
-            return response.data;
+    		var high = response.data;
+    		console.log('is high: ' + high);
+    		if (high === true) {
+    			console.log('high score');
+    			$scope.highScore = $scope.score;
+    			setHighScore();
+    		}
         }, function (response) {
             console.log('Error: ', response);
         });
@@ -131,10 +171,8 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
 	        		// remove used cards from deck
 	        		angular.forEach(cardsToBeRemoved, function (value, index) {
 	                    angular.forEach($scope.deckOfCards, function(row) {
-	                    	console.log('row: ' + row);
 	                    	var index = row.indexOf(value);
 	                    	if (index > -1) {
-	                    		console.log('index: ' + index);
 	                    		row.splice(index,1);
 	                    	}	                    	
 	                    });
