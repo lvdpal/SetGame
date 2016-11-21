@@ -25,15 +25,20 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
 	}
 
     $scope.drawCard = function(card) {
-        if (angular.isDefined(card) && angular.isDefined(card.shape)) {
-	    	if(card.shape == 'HEART') {
-	            return showHeart(card.color);
-	        } else if (card.shape == 'SQUARE') {
-	            return showSquare(card.color);
-	        } else if (card.shape == 'ELLIPSE') {
-	            return showEllipse(card.color);
+        var result = '';
+        var loops = determineNumber(card.amount);
+        for(var i=0; i<loops; i++) {
+            if (angular.isDefined(card) && angular.isDefined(card.shape)) {
+	    	    if(card.shape == 'HEART') {
+	    	        result += showHeart(card.color, card.filling);
+	            } else if (card.shape == 'SQUARE') {
+                    result += showSquare(card.color, card.filling);
+	            } else if (card.shape == 'ELLIPSE') {
+            	    result += showEllipse(card.color, card.filling);
+	            }
 	        }
         }
+        return result;
     }
 
 	$scope.selectCard = function (card) {
@@ -194,15 +199,51 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
         });
     }
 
-    function showHeart(color) {
-        return '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="120px" height="120px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <path id="template" d="M340.8,98.4c50.7,0,91.9,41.3,91.9,92.3c0,26.2-10.9,49.8-28.3,66.6L256,407.1L105,254.6c-15.8-16.6-25.6-39.1-25.6-63.9 c0-51,41.1-92.3,91.9-92.3c38.2,0,70.9,23.4,84.8,56.8C269.8,121.9,302.6,98.4,340.8,98.4 M340.8,83C307,83,276,98.8,256,124.8 c-20-26-51-41.8-84.8-41.8C112.1,83,64,131.3,64,190.7c0,27.9,10.6,54.4,29.9,74.6L245.1,418l10.9,11l10.9-11l148.3-149.8 c21-20.3,32.8-47.9,32.8-77.5C448,131.3,399.9,83,340.8,83L340.8,83z" fill="'+color+'"/></svg>';
+
+    function showHeart(color, filling) {
+        var openSvg = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="90px" height="90px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> ';
+        var fill = determineFilling(color, filling);
+        var crossHatch = crossHatching(color);
+        return openSvg + crossHatch + '<path id="template" d="M340.8,98.4c50.7,0,91.9,41.3,91.9,92.3c0,26.2-10.9,49.8-28.3,66.6L256,407.1L105,254.6c-15.8-16.6-25.6-39.1-25.6-63.9 c0-51,41.1-92.3,91.9-92.3c38.2,0,70.9,23.4,84.8,56.8C269.8,121.9,302.6,98.4,340.8,98.4 M340.8,83C307,83,276,98.8,256,124.8 c-20-26-51-41.8-84.8-41.8C112.1,83,64,131.3,64,190.7c0,27.9,10.6,54.4,29.9,74.6L245.1,418l10.9,11l10.9-11l148.3-149.8 c21-20.3,32.8-47.9,32.8-77.5C448,131.3,399.9,83,340.8,83L340.8,83z" '+fill+'/></svg>';
     }
 
-    function showSquare(color) {
-        return '<svg width="120" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M10 10 H 90 V 90 H 10 L 10 10" fill="'+color+'"/></svg>'
+    function showSquare(color, filling) {
+        var openSvg = '<svg width="90" height="90" xmlns="http://www.w3.org/2000/svg">';
+        var fill = determineFilling(color, filling);
+        var crossHatch = crossHatching(color);
+        return openSvg + crossHatch + '<path d="M10 10 H 70 V 70 H 10 L 10 10" '+fill+'/></svg>';
     }
 
-    function showEllipse(color) {
-        return '<svg width="120" height="100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="60" rx="50" ry="25" fill="'+color+'"/></svg>';
+    function showEllipse(color, filling) {
+        var openSvg = '<svg width="120" height="60" xmlns="http://www.w3.org/2000/svg">';
+        var fill = determineFilling(color, filling);
+        var crossHatch = crossHatching(color);
+        return openSvg + crossHatch + '<ellipse cx="60" cy="30" rx="50" ry="25" '+fill+'/></svg>';
+    }
+
+    function determineFilling(color, filling) {
+        var fill;
+        if(filling == 'FULL') {
+           fill = 'fill="'+color+'"';
+        } else if (filling == 'EMPTY') {
+           fill = 'stroke="'+color+'" fill="white"';
+        } else if (filling == 'SHADED') {
+           fill='fill="url(#diagonalHatch)"';
+        }
+        return fill;
+    }
+
+    function crossHatching(color) {
+        return '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style="stroke:'+color+'; stroke-width:1" /></pattern>';
+    }
+
+    function determineNumber(number) {
+        if(number == 'ONE') {
+            return 1;
+        } else if(number == 'TWO') {
+            return 2;
+        } else if(number == 'THREE') {
+            return 3;
+        }
     }
 }]);

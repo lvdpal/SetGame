@@ -2,10 +2,9 @@
 	<H1>A Game of set</H1>
 	<table border='1'>
 		<tr ng-repeat="row in deckOfCards">
-		  <td ng-repeat="card in row" ng-click="selectCard(card)" id="card{{card.id}}">
-			a:{{card.amount}}<br>
-			f:{{card.filling}}<br>
-              <p ng-bind-html="drawCard(card) | to_trusted"></p>
+		  <td ng-repeat="card in row" ng-click="selectCard(card)" id="card{{card.id}}"
+			  width="360px" height="100px" align="center">
+			<p ng-bind-html="drawCard(card) | to_trusted"></p>
 		  </td>
 		</tr>
 	</table>
