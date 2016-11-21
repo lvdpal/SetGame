@@ -186,7 +186,7 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
     }
 
     function setHighScore() {
-    	var urlSetHighScore = 'http://localhost:8080/highscore/set?highScore=' + $scope.score;
+    	var urlSetHighScore = 'http://localhost:8082/highscore/set?highScore=' + $scope.score;
     	$http.put(urlSetHighScore).then(function(response) {
             //$scope.gameId = response.data;
         }, function (response) {
