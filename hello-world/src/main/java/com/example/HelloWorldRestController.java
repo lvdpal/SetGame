@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloWorldRestController {
     private String saying;
 
+	@CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value="/hello", produces = "text/plain")
     public String sayHello() throws UnknownHostException {
         String hostName = null;
