@@ -204,7 +204,7 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
         var openSvg = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="90px" height="90px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> ';
         var fill = determineFilling(color, filling);
         var crossHatch = crossHatching(color);
-        return openSvg + crossHatch + '<path id="template" d="M340.8,98.4c50.7,0,91.9,41.3,91.9,92.3c0,26.2-10.9,49.8-28.3,66.6L256,407.1L105,254.6c-15.8-16.6-25.6-39.1-25.6-63.9 c0-51,41.1-92.3,91.9-92.3c38.2,0,70.9,23.4,84.8,56.8C269.8,121.9,302.6,98.4,340.8,98.4" '+fill+'/></svg>';
+        return openSvg + crossHatch + '<path id="template" d="M 44.958984 38.298828 A 25 25 0 0 0 20.048828 61.496094 L 19.958984 61.496094 L 19.958984 63.298828 L 19.958984 111.49609 L 69.958984 111.49609 L 69.958984 111.16602 A 25 25 0 0 0 93.728516 86.208984 A 25 25 0 0 0 69.865234 61.265625 A 25 25 0 0 0 44.958984 38.298828 z" '+fill+'/></svg>';
     }
 
     function showSquare(color, filling) {
