@@ -211,7 +211,7 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
         var openSvg = '<svg width="90" height="90" xmlns="http://www.w3.org/2000/svg">';
         var fill = determineFilling(color, filling);
         var crossHatch = crossHatching(color);
-        return openSvg + crossHatch + '<path d="M10 10 H 70 V 70 H 10 L 10 10" '+fill+'/></svg>';
+        return openSvg + crossHatch + '<g transform="translate(0,-952.36216)" id="layer1"><path d="M10 10 H 70 V 70 H 10 L 10 10" '+fill+'/></g></svg>';
     }
 
     function showEllipse(color, filling) {
