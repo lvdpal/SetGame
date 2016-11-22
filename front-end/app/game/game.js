@@ -201,7 +201,7 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
 
 
     function showHeart(color, filling) {
-        var openSvg = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="90px" height="90px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> ';
+        var openSvg = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120px" height="120px"> ';
         var fill = determineFilling(color, filling);
         var crossHatch = crossHatching(color);
         return openSvg + crossHatch + '<path id="template" d="m 7.3167829,940.10498 a 25,25 0 0 0 -1.633615,33.99939 l -0.06431,0.063 1.258795,1.2904 33.6546811,34.50133 35.791745,-34.91353 -0.230478,-0.2362 a 25,25 0 0 0 -0.411677,-34.46271 25,25 0 0 0 -34.499359,-1.19232 25,25 0 0 0 -33.8657781,0.95084 z" '+fill+'/></svg>';
