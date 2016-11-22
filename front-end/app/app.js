@@ -5,7 +5,6 @@ angular.module('myApp', [
   'ngRoute',
   'ngSanitize',
   'myApp.game',
-  'myApp.view2',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', '$httpProvider', function($locationProvider, $routeProvider, $httpProvider) {

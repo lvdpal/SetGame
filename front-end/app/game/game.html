@@ -4,12 +4,10 @@
 		<tr ng-repeat="row in deckOfCards">
 		  <td ng-repeat="card in row" ng-click="selectCard(card)" id="card{{card.id}}"
 			  width="360px" height="100px" align="center">
-			<p ng-bind-html="drawCard(card) | to_trusted"></p>
+			<p ng-bind-html="drawCard(card) | to_trusted" style="margin:0px;"></p>
 		  </td>
 		</tr>
 	</table>
-	<span>gameId: {{gameId}}</span><br>
-	<span>selectedCards: {{selectedCards}}</span><br>
 	<span>validSet: {{validSet}}</span><br>
 	<span>score: {{score}}</span><br>
 	<span>highscore: {{highScore}}</span> <br>
