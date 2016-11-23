@@ -21,6 +21,7 @@ angular.module('myApp.game', ['ngRoute', 'ngSanitize'])
 	
 	$scope.startGame = function() {
 		console.log('start game');
+		$scope.score = {};
 		createGame();		
 	}
 
